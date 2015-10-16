@@ -155,6 +155,9 @@ class Fakultas(object):
     def get_all(self):
         return self.__semua_fakultas
 
+    def get_kode_fakultas(self):
+        return self.__semua_fakultas.keys()
+
     def to_json(self):
         return json.dumps(self.__semua_fakultas)
 
