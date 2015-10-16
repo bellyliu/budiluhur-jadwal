@@ -4,6 +4,7 @@ from budiluhur import SELECT_TAG_NAME
 from budiluhur import URL_POST
 from bs4 import BeautifulSoup as bsoup
 import json
+from Levenshtein import distance
 
 class Jadwal(object):
 
@@ -103,13 +104,15 @@ class Jadwal(object):
         cari = []
         for i in self.__data:
             if 'Keterangan' in i.keys():
-                if keterangan.upper() in i['Keterangan']:
+                if distance(keterangan.upper(), i['Keterangan']) < len(keterangan):
                     cari.append(i)
+                    # print(distance(keterangan.upper(), i['Keterangan']))
 
         if not cari:
             cari = [
                 {
-                    'result': False
+                    'result': False,
+                    'keterangan': 'Tidak Ada Data Yang Dimaksud',
                 }
             ]
 
@@ -119,9 +122,11 @@ class Jadwal(object):
 
 
 
+
 class Fakultas(object):
     kode_fakultas = ""
     nama_fakultas = ""
+    jadwal = None
 
     def __init__(self):
         # ambil data html dengan get dari requests
@@ -145,28 +150,36 @@ class Fakultas(object):
         # lalu mengubahnya ke dalam bentuk dictionary.
         self.__semua_fakultas = dict([(i['value'], i.text) for i in select_tag])
 
-    def get_fakultas(self, kode_fakultas):
+    def get_fakultas(self, kode_fakultas, jadwal=False):
         # set kode fakultas
         self.kode_fakultas = kode_fakultas
-        # set nama fakultas
+        self.__jadwal()
         self.nama_fakultas = self.__semua_fakultas['{}'.format(kode_fakultas)]
-        return {self.kode_fakultas:self.nama_fakultas}
+        # set nama fakultas
+        if not jadwal:
+            return {self.kode_fakultas:self.nama_fakultas}
+        else:
+            return self
+
+
 
     def get_all(self):
         return self.__semua_fakultas
 
     def get_kode_fakultas(self):
-        return self.__semua_fakultas.keys()
+        return tuple(self.__semua_fakultas.keys())
+
+    def get_nilai_fakultas(self):
+        return tuple(self.__semua_fakultas.values())
 
     def to_json(self):
         return json.dumps(self.__semua_fakultas)
 
     def __str__(self):
-        return "<jadwalbl.Fakultas '{}'>".format(self.nama_fakultas)
+        return self.nama_fakultas
 
-    def jadwal_instance(self):
+    def __jadwal(self):
         if self.kode_fakultas:
-            jadwal = Jadwal(self.kode_fakultas)
-            return jadwal
+            self.jadwal = Jadwal(self.kode_fakultas)
         else:
             raise Exception('Kode fakultas harus di inisialisasi')

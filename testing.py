@@ -2,7 +2,7 @@ from budiluhur.jadwal import fakultas
 from pprint import pprint
 
 # inisialisasi class Fakultas
-f = fakultas.Fakultas()
-kode_fakultas = f.get_all()
-fakultas_teknik_informatika = f.get_kode_fakultas()
-pprint(fakultas_teknik_informatika)
+fak = fakultas.Fakultas()
+# id fakultas bisa diperoleh di fak.get_all()
+fe = fak.get_fakultas('03', True) # Fakultas Ekonomi
+pprint(fe.jadwal.get_from_ruangan('4.3.3'))
