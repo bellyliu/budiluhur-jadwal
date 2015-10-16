@@ -3,6 +3,12 @@
 Application Programming Interface untuk mengambil data
 Jadwal harian perkuliahan dari semua fakultas di Kampus `Universitas Budiluhur Jakarta`.
 
+### Instalasi
+untuk menginstall package `budiluhur-jadwal` melalui `pip`, ketik di terminal
+```
+$ pip install budiluhur-jadwal
+```
+
 ### Required Package
 package-package yang dibutuhkan ada di dalam file `requirements.txt`. berupa :
 ```
