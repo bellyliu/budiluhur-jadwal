@@ -24,8 +24,6 @@ setup(
 	author_email     = 'yanwarsolahudinn@gmail.com',
 	url              = 'https://github.com/yanwarsolahudinn/budiluhur-jadwal',
 	download_url     = 'https://github.com/yanwarsolahudinn/budiluhur-jadwal/archive/master.zip',
-	packages         = ['budiluhur'],
-	package_data     = {'budiluhur' : ['jadwal/*.*'] },
 	include_package_data = True,
 	long_description = long_description,
 	keywords         = ['API', 'JSON', 'budiluhur', 'jadwal', 'track', 'schedule', 'kuliah'],
