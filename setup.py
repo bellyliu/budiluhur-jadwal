@@ -18,7 +18,7 @@ print(fakultas_bl)
 
 setup(
 	name             = 'budiluhur-jadwal',
-	version          = '0.0.1',
+	version          = '1.0.0',
 	description      = 'Python API Jadwal Perkulahan Budiluhur',
 	author           = 'Yanwar Solahudin',
 	author_email     = 'yanwarsolahudinn@gmail.com',
