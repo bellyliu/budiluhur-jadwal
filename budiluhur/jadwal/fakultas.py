@@ -41,7 +41,7 @@ class Jadwal(object):
         data = [str(i.text.replace('\xa0','')) for i in self.__soup.findAll("td")[1:-2]]
         # ambil semua data header berdasarkan tag th. data ini sebagai indikasi segmentasi
         # untuk pemotongan data jadwal dalam n (atau 8) bagian.
-        head = [str(i.text.replace('\xa0','')) for i in self.__soup.findAll("th")]
+        head = [str(i.text.replace('\xa0','').replace('.','')) for i in self.__soup.findAll("th")]
 
         # mendapatkan jumlah pemotongan dari panjang head mula-mula
         # semua data jadwal terbagi menjadi 8 segmentasi.
@@ -61,6 +61,17 @@ class Jadwal(object):
         # wadah list dari self.__data.
         for list_result in result:
             self.__data.append(dict(zip(head, list_result)))
+
+        # menghapus dot pada nilai atribut No, No key juga sudah
+        # dihapus di bagian head atas.
+        # available in version 1.1.0
+        self.__clean_dot()
+
+    def __clean_dot(self):
+        data = []
+        for x in self.__data:
+            x['No'] = x['No'].replace('.','')
+
 
     def get_all(self):
         return self.__data
